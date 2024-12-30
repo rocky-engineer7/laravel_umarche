@@ -6,7 +6,7 @@
     コンポーネントテスト1
 
     <main>
-        <x-tests.card title="タイトル" content="本文" />
+        <x-tests.card title="タイトル" content="本文" :message="$message" />
     </main>
 
 </x-tests.app>
