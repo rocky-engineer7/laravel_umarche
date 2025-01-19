@@ -6,8 +6,8 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
+        // オリジナルのサービスプロバイダを呼び出せるようにする
         App\Providers\SampleServiceProvider::class,
-        // 必要なプロバイダを追加
     ])
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -15,7 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'auth' => \App\Http\Middleware\Authenticate::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
