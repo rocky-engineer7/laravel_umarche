@@ -23,12 +23,13 @@ class RedirectIfAuthenticated
             return redirect('/user/dashboard');
         }
 
-        if (Auth::guard(self::GUARD_OWNER)->check() && $request->routeIs('owner.*')) {
-            return redirect('/owner/dashboard');
+        // オーナーガードがログイン済みの場合
+        if (Auth::guard(self::GUARD_OWNER)->check() && $request->routeIs('admin.*')) {
+            return redirect('owner.dashboard');
         }
 
         if (Auth::guard(self::GUARD_ADMIN)->check() && $request->routeIs('admin.*')) {
-            return redirect('/admin/dashboard');
+            return redirect('admin.dashboard');
         }
 
         return $next($request);

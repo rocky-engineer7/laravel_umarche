@@ -11,20 +11,9 @@ use App\Http\Controllers\Owner\Auth\PasswordController;
 use App\Http\Controllers\Owner\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Owner\Auth\RegisteredUserController;
 use App\Http\Controllers\Owner\Auth\VerifyEmailController;
+use App\Http\Middleware\RedirectIfAuthenticated;
 
-Route::get('/', function () {
-    return view('owner.welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('owner.dashboard');
-})->middleware(['auth:owners'])->name('dashboard');
-
-Route::middleware('auth:owners')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/', function () { return view('owner.welcome');});
 
 Route::middleware('guest:owners')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -51,6 +40,14 @@ Route::middleware('guest:owners')->group(function () {
 });
 
 Route::middleware('auth:owners')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/dashboard', function () {
+        return view('owner.dashboard');
+    })->name('dashboard');
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

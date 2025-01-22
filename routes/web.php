@@ -20,19 +20,16 @@ Route::get('/serviceprovidertest', [LifeCycleTestController::class, 'showService
 // ユーザー用のルーティング
 Route::prefix('users')
 ->as('user.')
-->middleware('auth:users')
 ->group(__DIR__.'/auth.php');
 
 // オーナー用のルーティング
 Route::prefix('owner')
 ->as('owner.')
-->middleware('auth:owners')
 ->group(__DIR__.'/owner.php');
 
 // 管理者用のルーティング
 Route::prefix('admin')
 ->as('admin.')
-->middleware('auth:admin')
 ->group(__DIR__.'/admin.php');
 
 require __DIR__.'/auth.php';

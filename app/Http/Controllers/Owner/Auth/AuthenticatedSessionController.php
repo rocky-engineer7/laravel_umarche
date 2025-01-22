@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('/owner/dashboard', absolute: false));
+        return redirect()->intended(route('owner.dashboard', absolute: false));
     }
 
     /**
@@ -42,6 +42,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('owner.auth.login');
+        return redirect()->route('owner.login');
     }
 }
